@@ -55,7 +55,7 @@ fun String.ParseOpposite() = mapOf(
 )[this]!!
 
 object Result {
-    val WIN = 6
-    val LOSE = 0
-    val DRAW = 3
+    const val WIN = 6
+    const val LOSE = 0
+    const val DRAW = 3
 }
