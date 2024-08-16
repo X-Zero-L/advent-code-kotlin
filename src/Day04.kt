@@ -11,17 +11,16 @@ fun main() {
 
     fun processRanges(input: List<String>, check: (IntRange, IntRange) -> Int): Int = input.sumOf {
         it.split(",").map { range ->
-            val (start, end) = range.split("-").map(String::toInt)
-            start..end
+            range.split("-").map(String::toInt).let { (start, end) -> start..end }
         }.let { (first, second) -> check(first, second) }
     }
 
-    fun part1(input: List<String>): Int = processRanges(input) {
-        first, second -> (first.contains(second) || second.contains(first)).toInt()
+    fun part1(input: List<String>): Int = processRanges(input) { first, second ->
+        (first.contains(second) || second.contains(first)).toInt()
     }
 
-    fun part2(input: List<String>): Int = processRanges(input) {
-        first, second -> (first.overlaps(second) || second.overlaps(first)).toInt()
+    fun part2(input: List<String>): Int = processRanges(input) { first, second ->
+        (first.overlaps(second) || second.overlaps(first)).toInt()
     }
 
     val testInput = readInput("Day04_test")
