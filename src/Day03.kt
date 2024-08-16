@@ -6,12 +6,17 @@ fun main() {
         else -> throw IllegalArgumentException("Invalid input")
     }
 
+    fun findIntersectionValue(sets: List<Set<Char>>): Int {
+        return sets.reduce { acc, set -> acc.intersect(set) }.first().toValue()
+    }
+
     fun part1(input: List<String>): Int = input.sumOf {
-        it.chunked(it.length / 2).let { (left, right) -> left.toSet().intersect(right.toSet()).first().toValue() }
+        val (left, right) = it.chunked(it.length / 2)
+        findIntersectionValue(listOf(left.toSet(), right.toSet()))
     }
 
     fun part2(input: List<String>): Int = input.chunked(3).sumOf { chunk ->
-        chunk.map { it.toSet() }.reduce { acc, set -> acc.intersect(set) }.first().toValue()
+        findIntersectionValue(chunk.map { it.toSet() })
     }
 
     val testInput = readInput("Day03_test")
