@@ -11,8 +11,7 @@ fun main() {
     }
 
     fun part1(input: List<String>): Int = input.sumOf {
-        val (left, right) = it.chunked(it.length / 2)
-        findIntersectionValue(listOf(left.toSet(), right.toSet()))
+        findIntersectionValue(it.chunked(it.length / 2).map { it.toSet() })
     }
 
     fun part2(input: List<String>): Int = input.chunked(3).sumOf { chunk ->
