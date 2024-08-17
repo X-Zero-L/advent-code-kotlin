@@ -37,18 +37,19 @@ fun main() {
 }
 
 val List<String>.initializeStacks: List<ArrayDeque<Char>>
-    get() = List(getStackSize(this)) { ArrayDeque<Char>() }.also {
+    get() = List(this.getStackSize) { ArrayDeque<Char>() }.also {
         this.fillStackByInput { index, char ->
             it[index].add(char)
         }
     }
 
-fun getStackSize(input: List<String>) = input
-    .dropWhile { it.contains("[") }
-    .first()
-    .split(" ")
-    .filter { it.isNotEmpty() }
-    .maxOf { it.toInt() }
+val List<String>.getStackSize
+    get() = this
+        .dropWhile { it.contains("[") }
+        .first()
+        .split(" ")
+        .filter { it.isNotEmpty() }
+        .maxOf { it.toInt() }
 
 fun List<String>.fillStackByInput(onCharacterFound: (Int, Char) -> Unit) =
     this
