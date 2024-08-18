@@ -1,7 +1,11 @@
 fun main() {
 
     fun String.solve(distinct: Int = 4): Int =
-        windowedSequence(distinct) { it.toSet().size == distinct }.indexOf(true) + distinct
+        windowedSequence(distinct) {
+            mutableSetOf<Char>().let { set ->
+                it.all { char -> set.add(char) }
+            }
+        }.indexOf(true) + distinct
 
     fun part1(input: String): Int = input.solve(4)
 
