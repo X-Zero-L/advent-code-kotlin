@@ -1,10 +1,11 @@
+val globalHashSet = hashSetOf<Char>()
+
 fun main() {
 
     fun String.solve(distinct: Int = 4): Int =
         windowedSequence(distinct) {
-            hashSetOf<Char>().let { set ->
-                it.all { char -> set.add(char) }
-            }
+            globalHashSet.clear()
+            it.all { char -> globalHashSet.add(char) }
         }.indexOf(true) + distinct
 
     fun part1(input: String): Int = input.solve(4)
