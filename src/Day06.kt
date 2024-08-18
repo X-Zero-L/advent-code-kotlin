@@ -1,11 +1,7 @@
 fun main() {
 
     fun String.solve(distinct: Int = 4): Int =
-        windowedSequence(distinct)
-            .indexOfFirst { it.toSet().size == distinct } // 找到第一个元素不重复的窗口
-            .takeIf { it != -1 }
-            ?.let { it + distinct }
-            ?: error("No solution found")
+        windowedSequence(distinct) { it.toSet().size == distinct }.indexOf(true) + distinct
 
     fun part1(input: String): Int = input.solve(4)
 
