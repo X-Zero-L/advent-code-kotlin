@@ -1,0 +1,22 @@
+fun main() {
+
+    fun String.solve(distinct: Int = 4): Int =
+        windowed(distinct)
+            .indexOfFirst { it.toSet().size == distinct } // 找到第一个元素不重复的窗口
+            .takeIf { it != -1 }
+            ?.let { it + distinct }
+            ?: error("No solution found")
+
+    fun part1(input: String): Int = input.solve(4)
+
+    fun part2(input: String): Int = input.solve(14)
+
+    val testInput = readRawInput("Day06_test")
+    check(part1(testInput) == 6)
+
+    val input = readRawInput("Day06")
+    println(part1(input))
+
+    check(part2(testInput) == 23)
+    println(part2(input))
+}
