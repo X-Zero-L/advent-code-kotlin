@@ -1,7 +1,7 @@
 fun main() {
 
     fun String.solve(distinct: Int = 4): Int =
-        windowed(distinct)
+        windowedSequence(distinct)
             .indexOfFirst { it.toSet().size == distinct } // 找到第一个元素不重复的窗口
             .takeIf { it != -1 }
             ?.let { it + distinct }
