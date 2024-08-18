@@ -2,7 +2,7 @@ fun main() {
 
     fun String.solve(distinct: Int = 4): Int =
         windowedSequence(distinct) {
-            mutableSetOf<Char>().let { set ->
+            hashSetOf<Char>().let { set ->
                 it.all { char -> set.add(char) }
             }
         }.indexOf(true) + distinct
