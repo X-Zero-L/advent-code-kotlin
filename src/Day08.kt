@@ -1,5 +1,3 @@
-import kotlin.math.abs
-
 fun main() {
 
     val directions = listOf(-1 to 0, 1 to 0, 0 to -1, 0 to 1)
@@ -9,17 +7,15 @@ fun main() {
             .takeWhile { (x, y) -> x in input.indices && y in 0 until input[0].length }.drop(1)
             .all { (x, y) -> input[x][y] < input[i][j] }
 
-    fun getTreeCount(i: Int, j: Int, input: List<String>, direction: Pair<Int, Int>): Int {
-        var (x, y) = i + direction.first to j + direction.second
-        while (true) {
-            if (x !in input.indices || y !in 0 until input[0].length) return if (direction.second == 0) abs(x - i) - 1 else abs(
-                y - j
-            ) - 1
-            if (input[x][y] >= input[i][j]) return if (direction.second == 0) abs(x - i) else abs(y - j)
-            x += direction.first
-            y += direction.second
-        }
-    }
+    fun getTreeCount(i: Int, j: Int, input: List<String>, direction: Pair<Int, Int>): Int =
+        generateSequence(i to j) { (x, y) -> x + direction.first to y + direction.second }
+            .drop(1)
+            .takeWhile { (x, y) -> x in input.indices && y in 0 until input[0].length && input[x][y] < input[i][j] }
+            .count().let { count ->
+                if (count == 0) 0 else count + if ((direction.second == 0 && i + direction.first * count in 1 until input.size - 1) ||
+                    (direction.second != 0 && j + direction.second * count in 1 until input[0].length - 1)
+                ) 1 else 0
+            }
 
     fun solve(input: List<String>, actionFunction: (Int, Int, MutableList<MutableList<Int>>) -> Unit): List<List<Int>> {
         val (n, m) = (input.size to input[0].length)
