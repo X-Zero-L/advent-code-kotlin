@@ -4,15 +4,10 @@ fun main() {
 
     val directions = listOf(-1 to 0, 1 to 0, 0 to -1, 0 to 1)
 
-    fun isHighest(i: Int, j: Int, input: List<String>, direction: Pair<Int, Int>): Boolean {
-        var (x, y) = i + direction.first to j + direction.second
-        while (true) {
-            if (x !in input.indices || y !in 0 until input[0].length) return true
-            if (input[x][y] >= input[i][j]) return false
-            x += direction.first
-            y += direction.second
-        }
-    }
+    fun isHighest(i: Int, j: Int, input: List<String>, direction: Pair<Int, Int>): Boolean =
+        generateSequence(i to j) { (x, y) -> x + direction.first to y + direction.second }
+            .takeWhile { (x, y) -> x in input.indices && y in 0 until input[0].length }.drop(1)
+            .all { (x, y) -> input[x][y] < input[i][j] }
 
     fun getTreeCount(i: Int, j: Int, input: List<String>, direction: Pair<Int, Int>): Int {
         var (x, y) = i + direction.first to j + direction.second
