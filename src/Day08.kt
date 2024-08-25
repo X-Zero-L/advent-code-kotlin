@@ -12,7 +12,7 @@ fun main() {
             .drop(1)
             .takeWhile { (x, y) -> x in input.indices && y in 0 until input[0].length && input[x][y] < input[i][j] }
             .count().let { count ->
-                if (count == 0) 0 else count + if ((direction.second == 0 && i + direction.first * count in 1 until input.size - 1) ||
+                count + if ((direction.second == 0 && i + direction.first * count in 1 until input.size - 1) ||
                     (direction.second != 0 && j + direction.second * count in 1 until input[0].length - 1)
                 ) 1 else 0
             }
