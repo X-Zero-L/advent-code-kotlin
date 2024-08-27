@@ -31,8 +31,9 @@ fun main() {
             monkeys.forEach { monkey ->
                 while (monkey.items.isNotEmpty()) {
                     val item = monkey.items.removeAt(0)
-                    val a = if (monkey.op[0] == "old") item else monkey.op[0].toLong()
-                    val b = if (monkey.op[2] == "old") item else monkey.op[2].toLong()
+                    fun String.parseToLong(): Long = if (this == "old") item else this.toLong()
+                    val a = monkey.op[0].parseToLong()
+                    val b = monkey.op[2].parseToLong()
                     val result = when (monkey.op[1]) {
                         "*" -> a * b
                         "+" -> a + b
