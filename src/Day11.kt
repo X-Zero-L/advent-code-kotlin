@@ -1,4 +1,4 @@
-class Monkey(
+data class Monkey(
     private val id: Int,
     var items: MutableList<Long> = mutableListOf(),
     val op: List<String>,
@@ -6,11 +6,7 @@ class Monkey(
     val left: Int = -1,
     val right: Int = -1,
     var times: Long = 0
-) {
-    override fun toString(): String {
-        return "Monkey $id:\n items: $items\n op: $op\n checkN: $checkN\n left: $left\n right: $right"
-    }
-}
+)
 
 fun main() {
     fun gcd(a: Long, b: Long): Long = if (b == 0.toLong()) a else gcd(b, a % b)
