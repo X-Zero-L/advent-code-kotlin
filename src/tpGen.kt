@@ -19,7 +19,7 @@ fun createInputFiles(dayNumber: String) {
 fun main() {
     val templateFile = File("src/template.kt")
     print("Enter the day number: ")
-    val dayNumber = readLine()!!.toInt().toString().padStart(2, '0')
+    val dayNumber = readln().toInt().toString().padStart(2, '0')
     createDayFile(templateFile, dayNumber)
     createInputFiles(dayNumber)
 }
