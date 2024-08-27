@@ -17,7 +17,7 @@ fun main() {
                     res += cycle * x
                 }
                 print(if (index in x - 1..x + 1) '#' else '.')
-                if ((cycle - 1) % 40 == 0) {
+                if (index == 0) {
                     println()
                 }
             }
