@@ -27,6 +27,7 @@ fun main() {
                 )
             )
         }
+        val lcm = monkeys.map { it.checkN }.reduce { acc, i -> lcm(acc, i) }
         repeat(times) {
             monkeys.forEach { monkey ->
                 while (monkey.items.isNotEmpty()) {
@@ -39,7 +40,7 @@ fun main() {
                         "+" -> a + b
                         "-" -> a - b
                         else -> throw IllegalArgumentException("Invalid operator")
-                    } / (if (isWorried) 3 else 1) % monkeys.map { it.checkN }.reduce { acc, i -> lcm(acc, i) }
+                    } / (if (isWorried) 3 else 1) % lcm
                     if (result % monkey.checkN == 0.toLong()) monkeys[monkey.left].items.add(result) else monkeys[monkey.right].items.add(
                         result
                     )
