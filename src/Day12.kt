@@ -6,8 +6,8 @@ fun main() {
     fun isOut(x: Int, y: Int, n: Int, m: Int) = x < 0 || x >= n || y < 0 || y >= m
 
     fun bfs(start: Pair<Int, Int>, input: List<String>): Int {
-        val st = mutableMapOf<Triple<Int, Int, Int>, Boolean>()
-        st[Triple(start.first, start.second, 0)] = true
+        val st = mutableMapOf<Pair<Int, Int>, Boolean>()
+        st[Pair(start.first, start.second)] = true
         val q = mutableListOf(Triple(start.first, start.second, 0))
         while (q.isNotEmpty()) {
             val (x, y, times) = q.removeFirst()
@@ -19,8 +19,8 @@ fun main() {
                     return times + 1
                 }
                 if (!isValid(input[x][y], input[nx][ny])) return@forEachIndexed
-                if (st[Triple(nx, ny, index)] == true) return@forEachIndexed
-                st[Triple(nx, ny, index)] = true
+                if (st[Pair(nx, ny)] == true) return@forEachIndexed
+                st[Pair(nx, ny)] = true
                 q.add(Triple(nx, ny, times + 1))
             }
         }
