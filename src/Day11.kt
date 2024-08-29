@@ -11,8 +11,7 @@ data class Monkey(
 fun main() {
     fun gcd(a: Long, b: Long): Long = if (b == 0.toLong()) a else gcd(b, a % b)
     fun lcm(a: Long, b: Long): Long = a * b / gcd(a, b)
-    fun solve(input: String, isWorried: Boolean = true, times: Int = 20): Long {
-        val monkeys = mutableListOf<Monkey>()
+    fun solve(input: String, isWorried: Boolean = true, times: Int = 20): Long = mutableListOf<Monkey>().let { monkeys ->
         fun String.parseLast(): Long = this.trim().split(" ").last().toLong()
         input.split("\n").chunked(7).forEach { chunk ->
             monkeys.add(
@@ -48,7 +47,7 @@ fun main() {
                 }
             }
         }
-        return monkeys.sortedByDescending { it.times }.take(2).map { it.times }.reduce { acc, i -> acc * i }
+        monkeys.sortedByDescending { it.times }.take(2).map { it.times }.reduce { acc, i -> acc * i }
     }
 
     fun part1(input: String): Long = solve(input, true, 20)
