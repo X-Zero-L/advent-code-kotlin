@@ -6,7 +6,7 @@ fun main() {
     fun isOut(x: Int, y: Int, n: Int, m: Int) = x < 0 || x >= n || y < 0 || y >= m
 
     fun bfs(start: Pair<Int, Int>, input: List<String>): Int {
-        val st = mutableMapOf<Pair<Int, Int>, Boolean>() // 这题的数据似乎偏弱，不存在理想最短路被堵死的情况，所以不需要用元组来记录，只需要pair即可
+        val st = mutableMapOf<Pair<Int, Int>, Boolean>()
         st[Pair(start.first, start.second)] = true
         val q = mutableListOf(Triple(start.first, start.second, 0))
         while (q.isNotEmpty()) {
