@@ -11,15 +11,15 @@ fun main() {
         val q = mutableListOf(Triple(start.first, start.second, 0))
         while (q.isNotEmpty()) {
             val (x, y, times) = q.removeFirst()
-            directions.forEachIndexed { index, (dx, dy) ->
+            directions.forEach { (dx, dy) ->
                 val nx = x + dx
                 val ny = y + dy
-                if (isOut(nx, ny, input.size, input[0].length)) return@forEachIndexed
+                if (isOut(nx, ny, input.size, input[0].length)) return@forEach
                 if (input[nx][ny] == 'E') {
                     return times + 1
                 }
-                if (!isValid(input[x][y], input[nx][ny])) return@forEachIndexed
-                if (st[Pair(nx, ny)] == true) return@forEachIndexed
+                if (!isValid(input[x][y], input[nx][ny])) return@forEach
+                if (st[Pair(nx, ny)] == true) return@forEach
                 st[Pair(nx, ny)] = true
                 q.add(Triple(nx, ny, times + 1))
             }
