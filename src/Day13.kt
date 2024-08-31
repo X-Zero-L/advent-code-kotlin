@@ -1,17 +1,35 @@
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
-
-fun readNestedList(input: String): List<Any> {
-    val jsonElement: JsonElement = Json.parseToJsonElement(input)
-    return parseJsonElement(jsonElement)
-}
-
-fun parseJsonElement(element: JsonElement): List<Any> {
-    return when (element) {
-        is JsonArray -> element.map { parseJsonElement(it) }
-        else -> listOf(element.toString().toInt())
+fun parse(input: String): Any {
+    var i = 0
+    fun next(): Any {
+        if (input[i] == '[') { // build new list
+            i++
+            val res = mutableListOf<Any>()
+            while (true) {
+                if (input[i] == ']') {
+                    i++
+                    return res
+                }
+                res.add(next())
+                if (input[i] == ']') {
+                    i++
+                    return res
+                }
+                check(input[i] == ',')
+                i++
+            }
+        }
+        check(input[i] in '0'..'9')
+        var num = 0
+        while (input[i] in '0'..'9') {
+            num = num * 10 + (input[i] - '0')
+            i++
+        }
+        return num
     }
+
+    val res = next()
+    check(i == input.length)
+    return res
 }
 
 fun compare(a: Any, b: Any): Int {
@@ -32,12 +50,12 @@ fun compare(a: Any, b: Any): Int {
 
 fun main() {
     fun part1(input: List<String>): Int = input.chunked(3).mapIndexed { index, it ->
-        val (a, b) = readNestedList(it[0]) to readNestedList(it[1])
+        val (a, b) = parse(it[0]) to parse(it[1])
         if (compare(a, b) < 0) index + 1 else 0
     }.sum()
 
-    fun part2(input: List<String>): Int = (readNestedList("[[2]]") to readNestedList("[[6]]")).let { (d1, d2) ->
-        (input.mapNotNull { if (it.isEmpty()) null else readNestedList(it) } + listOf(
+    fun part2(input: List<String>): Int = (parse("[[2]]") to parse("[[6]]")).let { (d1, d2) ->
+        (input.mapNotNull { if (it.isEmpty()) null else parse(it) } + listOf(
             d1,
             d2
         )).sortedWith { a, b ->
